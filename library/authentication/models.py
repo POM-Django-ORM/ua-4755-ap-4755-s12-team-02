@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 ROLE_CHOICES = (
     (0, 'visitor'),
@@ -11,11 +12,11 @@ ROLE_CHOICES = (
 class CustomUser(AbstractBaseUser):
     first_name = models.CharField(max_length=20, default='')
     last_name = models.CharField(max_length=20, default='')
-    middle_name = models.CharField(max_length=20, null=True)
+    middle_name = models.CharField(max_length=20, default='')
     email = models.EmailField(unique=True, max_length=100, default='')
     password = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
     role = models.IntegerField(choices=ROLE_CHOICES, default=0)
     is_active = models.BooleanField(default=False)
 
@@ -55,6 +56,8 @@ class CustomUser(AbstractBaseUser):
 
     @staticmethod
     def create(email, password, first_name=None, middle_name=None, last_name=None):
+        if '@' not in email:
+            return None
         try:
             validate_email(email)
 
