@@ -5,9 +5,9 @@ class Order(models.Model):
     book = models.ForeignKey('book.Book', on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(
         'authentication.CustomUser', on_delete=models.CASCADE, null=True)
-    created_at = models.IntegerField(default=0)
-    end_at = models.IntegerField(null=True, default=None)
-    plated_end_at = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    end_at = models.DateTimeField(null=True, blank=True)
+    plated_end_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return (f'book id: {self.book.id},'
