@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('authentication', '0002_customuser_created_at_customuser_email_and_more'),
+        ('authentication', '0002_customuser_fields'),
         ('book', '0002_book_authors_book_count_book_description_book_name'),
     ]
 
