@@ -58,6 +58,14 @@ class CustomUser(AbstractBaseUser):
     def create(email, password, first_name=None, middle_name=None, last_name=None):
         if '@' not in email:
             return None
+        
+        if first_name and len(first_name) > 20:
+            return None
+        if middle_name and len(middle_name) > 20:
+            return None
+        if last_name and len(last_name) > 20:
+            return None
+        
         try:
             validate_email(email)
 
